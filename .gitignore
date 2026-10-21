@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+.env
+.env.local
+.data/
+.data-*/
+.desktop-test-*/
+release/
+*.log
+.DS_Store
+playwright-report/
+test-results/
+screenshots/

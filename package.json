@@ -1,0 +1,26 @@
+{
+  "name": "aiicon",
+  "version": "0.1.2",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,web -c green,cyan \"pnpm --filter @aiicon/server dev\" \"pnpm --filter @aiicon/web dev\"",
+    "build": "pnpm --filter @aiicon/web build && pnpm --filter @aiicon/server build",
+    "start": "pnpm --filter @aiicon/server start",
+    "typecheck": "pnpm --filter @aiicon/shared typecheck && pnpm --filter @aiicon/server typecheck && pnpm --filter @aiicon/web typecheck && pnpm --filter @aiicon/desktop typecheck",
+    "test": "pnpm --filter @aiicon/shared test && pnpm --filter @aiicon/server test",
+    "mock:deepseek": "node scripts/mock-deepseek.mjs",
+    "desktop:dev": "pnpm build && pnpm --filter @aiicon/desktop dev",
+    "desktop:package": "pnpm build && pnpm --filter @aiicon/desktop dist"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6",
+    "typescript": "5.9.3"
+  }
+}
+
+

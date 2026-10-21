@@ -1,0 +1,14 @@
+packages:
+  - apps/*
+  - packages/*
+allowBuilds:
+  electron: true
+  electron-winstaller: false
+  esbuild: true
+minimumReleaseAgeExclude:
+  - electron@44.9.1
+
+# electron-builder 26.x imports ElectronDownloadCacheMode from @electron/get v5,
+# while its package metadata still allows v3. Pin v5 so NSIS packaging works.
+overrides:
+  "@electron/get": 5.1.0

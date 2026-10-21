@@ -1,0 +1,75 @@
+{
+  "name": "@aiicon/desktop",
+  "version": "0.1.2",
+  "private": true,
+  "description": "AIICON — local AI vector icon studio",
+  "author": "AIICON",
+  "type": "commonjs",
+  "main": "dist-electron/main.cjs",
+  "scripts": {
+    "build:main": "esbuild src/main.ts --bundle --platform=node --format=cjs --target=node22 --external:electron --outfile=dist-electron/main.cjs",
+    "build:preload": "esbuild src/preload.ts --bundle --platform=node --format=cjs --target=node22 --external:electron --outfile=dist-electron/preload.cjs",
+    "dev": "pnpm build:main && pnpm build:preload && electron .",
+    "dist": "pnpm build:main && pnpm build:preload && electron-builder --win nsis",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@aiicon/server": "workspace:*",
+    "@types/node": "^24.0.0",
+    "electron": "^44.9.1",
+    "electron-builder": "^26.17.0",
+    "esbuild": "^0.28.2",
+    "typescript": "5.9.3"
+  },
+  "build": {
+    "appId": "com.aiicon.studio",
+    "productName": "AIICON",
+    "artifactName": "AIICON-Setup-${version}.${ext}",
+    "asar": true,
+    "directories": {
+      "output": "../../release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../web/dist",
+        "to": "web"
+      },
+      {
+        "from": "build/icon.ico",
+        "to": "icon.ico"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "AIICON",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
+
+
